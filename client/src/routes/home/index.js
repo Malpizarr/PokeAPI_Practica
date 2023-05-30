@@ -4,12 +4,16 @@ import InfiniteScroll from 'react-infinite-scroller';
 import {Card, CardContent, Button, TextField, Box} from "@mui/material";
 import { useSpring, animated } from 'react-spring';
 import { PulseLoader } from 'react-spinners';
+import {ModoOscuroContext} from "../../components/ModoOscuro";
 
 const AnimatedCard = animated(Card);
 
 class PokemonCard extends Component {
+	static contextType = ModoOscuroContext;
+
 	render() {
 		const { pokemon, index } = this.props;
+		const { darkMode } = this.context;
 
 		const [props, set] = useSpring(() => ({
 			scale: 1,
@@ -22,8 +26,8 @@ class PokemonCard extends Component {
 			<AnimatedCard
 				key={index}
 				sx={{
-					backgroundColor: '#e0dee1',
-					color: '#000000',
+					backgroundColor: darkMode ? '#424242' : '#e0dee1',
+					color: darkMode ? '#ffffff' : '#000000',
 					margin: '10px',
 				}}
 				onMouseEnter={() => set({ scale: 1.1 })}
@@ -31,6 +35,7 @@ class PokemonCard extends Component {
 				style={{
 					transform: props.scale.to(scale => `scale(${scale})`)
 				}}
+
 			>
 				<a href={link1} target="_blank" style={{textDecoration: 'none',
 					color: 'black',
